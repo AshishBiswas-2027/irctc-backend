@@ -14,7 +14,7 @@ exports.generateAccessToken = (userId) => {
      }
      return jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: config.ACCESS_TOKEN_EXP })
 }
-
+//jti =har refresh token ka alag hota hai jti
 exports.generateRefreshToken = (userId) => {
      const payload = {
           id: userId,

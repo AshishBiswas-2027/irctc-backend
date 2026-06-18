@@ -15,3 +15,6 @@ function getDeviceFingerprint(req) {
 }
 
 module.exports = getDeviceFingerprint;
+//non critical application hai isiliye multiple devices se login ho sakta hai 
+//ye device id return karega
+//kyu ki same mail se more than one device chal sakta hai toh sabka session alaga alag hoga 

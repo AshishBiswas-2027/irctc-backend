@@ -3,11 +3,12 @@ const {config} = require('../config');
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(config.SENDGRID_API_KEY);
 const minutes = (config.OTP_TTL || 300) / 60;
+
 async function sendOtpEmail(email, otp){
      const msg = {
           to: email,
           from: `${config.MAIL_SEND}`,
-          subject: 'Your DesignKarle verification code',
+          subject: 'Your Ashish-irctc-backend verification code',
           html: `
      <div style="
           font-family: Arial, sans-serif; 
@@ -20,7 +21,7 @@ async function sendOtpEmail(email, otp){
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
      ">
           <div style="text-align: center; margin-bottom: 20px;">
-               <h2 style="color: #4A3AFF; margin: 0;">DesignKarle</h2>
+               <h2 style="color: #4A3AFF; margin: 0;">AshishBiswas</h2>
           </div>
 
           <p style="font-size: 16px; color: #333;">
@@ -28,7 +29,7 @@ async function sendOtpEmail(email, otp){
           </p>
 
           <p style="font-size: 16px; color: #333;">
-               Welcome to <strong>DesignKarle</strong> 👋  
+               Welcome to <strong>irctc-backend</strong> 👋  
                Use the verification code below to complete your sign up:
           </p>
 
@@ -71,6 +72,7 @@ async function sendOtpEmail(email, otp){
 }
 
 
+
 async function verifyOtpEmail(meta) {
 
      const msg = {
@@ -89,7 +91,7 @@ async function verifyOtpEmail(meta) {
           box-shadow: 0 4px 10px rgba(0,0,0,0.05);
      ">
           <div style="text-align: center; margin-bottom: 20px;">
-               <h2 style="color: #4A3AFF; margin: 0;">DesignKarle</h2>
+               <h2 style="color: #4A3AFF; margin: 0;">AshishBiswas</h2>
           </div>
 
           <p style="font-size: 16px; color: #333;">
@@ -97,7 +99,7 @@ async function verifyOtpEmail(meta) {
           </p>
 
           <p style="font-size: 16px; color: #333;">
-               Welcome to <strong>DesignKarle</strong> 👋  
+               Welcome to <strong>irctc-backend</strong> 👋  
                Your account has been successfully created and verified.
           </p>
 

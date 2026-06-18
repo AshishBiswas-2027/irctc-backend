@@ -9,9 +9,13 @@ const ATTEMPT_MAX = parseInt(config.OTP_MAX_VERIFY_ATTEMPTS || '5', 10);
 const OTP_TTL = parseInt(config.OTP_TTL || '300', 10);
 const HMAC_SECRET = config.OTP_HMAC_SECRET
 
+//otp ko hash karne k liye
 function hmacFor(email, otp){
      return crypto.createHmac('sha256', HMAC_SECRET).update(email + ":" + otp).digest('hex');
 }
+
+//one user = 5 otps only in one hour ->if exceeds then error 
+
 async function generateAndStoreOtp(meta){
      // how many otp's you can send in an hour
      const rateKey = `otp:rate:${meta.email}`;
@@ -35,11 +39,17 @@ async function generateAndStoreOtp(meta){
           hashedOtp: hashed,
           meta
      }), 'EX', OTP_TTL);
-     await redis.incr(rateKey);
-     await redis.expire(rateKey, 3600);
+     await redis.incr(rateKey);//jitna baar otp generate hoga ye count badhega 
+     await redis.expire(rateKey, 3600);//ek ghante me wapas zero ho jayega 
      return {otp, otpSessionId};
 }
 
+
+//max kitna baar verify kar sakta hai 
+//redis se otp session ko fetch karna hai 
+//hashed otp ko user k otp se match karega
+//user ka acc create karne se pehle attempts key aur otp session aur otp rate ko deletekar dege aur meta return kar denge agar otp match hota hai 
+//agar otp match nahi hoga toh attempts count increase karege aur expiry set karnge  
 async function verifyOtp(otp, otpSessionId){
      const rawData = await redis.get(`otp:session:${otpSessionId}`);
      if(!rawData) return null;

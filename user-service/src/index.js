@@ -13,8 +13,11 @@ const {reqLogger} = require('./middlewares/req.middleware');
 
 const app = express();
 
-app.use(helmet());
 app.use(corsMiddleware);
+app.use(helmet({
+     crossOriginOpenerPolicy: false,
+     crossOriginEmbedderPolicy: false,
+}));
 app.use(reqLogger);
 app.use(express.json());
 app.use(cookieParser());
