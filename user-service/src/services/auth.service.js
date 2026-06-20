@@ -1,16 +1,17 @@
 const { ConflictError, BadRequestError, ForbiddenError,UnauthorizedError } = require("../utils/error")
 const {generateAndStoreOtp, verifyOtp} = require('../utils/otp');
-const {sendOtpEmail, verifyOtpEmail} = require('../utils/email');
-const {generateAccessToken, generateRefreshToken, verifyRefreshToken} = require('../utils/auth');
+const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = require('../utils/auth');
+const notificationProducer = require('../kafka/producer/notification.producer')
 const bcrypt = require('bcrypt');
 const prisma = require('../config/prisma');
 const {redis} = require('../config/redis');
 const { config } = require("../config");
 const logger = require('../config/logger');
 const jwt = require('jsonwebtoken');
-const { generate } = require("otp-generator");
 const {OAuth2Client} = require("google-auth-library");
 const client = new OAuth2Client(config.GOOGLE_CLIENT_ID);
+
+//services contains the actual business logic 
 
 // gets data from auth controller 
 
@@ -30,8 +31,14 @@ const sendOTP = async(firstName, lastName, email, password) =>{
      }
      const hashedPassword = await bcrypt.hash(password, 12);
      const meta = {firstName, lastName, email, hashedPassword};
-     const {otp, otpSessionId} = await generateAndStoreOtp(meta);// in utils/otp.js
-     await sendOtpEmail(email, otp);//in utils/email.js
+     const { otp, otpSessionId } = await generateAndStoreOtp(meta);// in utils/otp.js
+     
+     //============================SYNCHRONOUS WAY OF SENDING NOTIFICATION=======================
+     //-------NOT GOOD BECAUSE OF BLOCKING PROGLEM
+     // await sendOtpEmail(email, otp);//in utils/email.js
+
+     await notificationProducer.sendOtpEmail(email, otp, (config.OTP_TTL) / 60);
+     logger.info(`OTP email queued for : ${email}`);
      return {otpSessionId}
 }
 
@@ -55,7 +62,13 @@ const verifyOTP = async(otp, otpSessionId) =>{
           }
      })
 
-     await verifyOtpEmail(meta);
+     //=================SYCHRONOUS WAY - BAD - BLOCKING PROBLEM ============================
+
+     // await verifyOtpEmail(meta);
+
+     //==================ASYNCHRONOUS WAY ========================
+     await notificationProducer.sendWelcomeEmail(meta.email, meta.firstName);
+     logger.info(`Welcome email queued for ${meta.email}`);
      return user;
 
 }

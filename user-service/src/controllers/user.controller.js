@@ -1,7 +1,7 @@
 const { BadRequestError } = require("../utils/error");
 const asyncHandler = reuire("../utils/asyncHandler");
 const userService = require("../services/user.service")
-
+const logger = require("../config/logger");
 
 
 
@@ -23,4 +23,12 @@ exports.getProfile = asyncHandler(async (req, res) => {
         }
     })
 
+})
+
+exports.updateProfile = asyncHandler(async(req, res) =>{
+     // TODO TASK FOR YOU
+})
+
+exports.deleteProfile = asyncHandler(async(req, res) =>{
+     // TODO TASK FOR YOU
 })

@@ -30,3 +30,7 @@ const getProfile = async (userId) => {
     
     
 }
+
+module.exports = {
+    getProfile
+}
