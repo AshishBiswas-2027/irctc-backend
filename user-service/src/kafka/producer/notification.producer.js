@@ -1,6 +1,6 @@
 const { producer, connectProducer } = require('../../config/kafka');
 const logger = require('../../config/logger');
-const { TOPICS } = require('../../utils/constants');
+const {KAFKA_TOPICS, NOTIFICATION_TOPICS } = require('../../../../shared/constants/kafka-topics');
 
 //dusti services direct kafka ko na touch kare
 //producer ka ek hi connection chahiye-singleton
@@ -50,7 +50,7 @@ class NotificationProducer {
      
      async sendOtpEmail(email, otp, ttlMinutes = 5){
           return this.sendMessage(
-               TOPICS.OTP_EMAIL,
+               KAFKA_TOPICS.OTP_EMAIL,
                `otp-${email}`,
                {email, otp, ttlMinutes}
           )
@@ -58,7 +58,7 @@ class NotificationProducer {
 
      async sendWelcomeEmail(email, firstName){
           return this.sendMessage(
-               TOPICS.WELCOME_EMAIL,
+               KAFKA_TOPICS.WELCOME_EMAIL,
                `welcome-${email}`,
                {email, firstName}
           )
