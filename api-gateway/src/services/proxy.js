@@ -73,7 +73,11 @@ class CircuitBreaker {
 const circuitBreakers = {
      userService: new CircuitBreaker('user-service'),
      searchService: new CircuitBreaker('search-service'),
-     bookingService: new CircuitBreaker('booking-service')
+     adminService: new CircuitBreaker('admin-service'),
+     notificationService: new CircuitBreaker('notification-service'),
+     bookingService: new CircuitBreaker('booking-service'),
+     paymentService: new CircuitBreaker('payment-service'),
+     inventoryService: new CircuitBreaker('inventory-service')
 };
 
 
@@ -84,6 +88,8 @@ const circuitBreakers = {
 //req ko gate se correct microservice par forward karna
 async function forwardRequest(serviceUrl, path, method, data, headers, circuitBreaker) {
      const url = `${serviceUrl}${path}`;
+
+     logger.infor(url);
      // http://localhost:4001/auth/login
      const requestConfig = {
           method,

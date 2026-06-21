@@ -2,7 +2,7 @@ const { producer, connectProducer } = require('../../config/kafka');
 const logger = require('../../config/logger');
 const {KAFKA_TOPICS, NOTIFICATION_TOPICS } = require('../../../../shared/constants/kafka-topics');
 
-//dusti services direct kafka ko na touch kare
+//dusri services direct kafka ko na touch kare
 //producer ka ek hi connection chahiye-singleton
 class NotificationProducer {
      constructor() {

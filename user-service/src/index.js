@@ -10,7 +10,8 @@ const userRoutes = require('./routes/user.route');
 
 const {corsMiddleware} = require('./middlewares/cors.middleware');
 const errorHandler = require('./middlewares/error.middleware');
-const {reqLogger} = require('./middlewares/req.middleware');
+const { reqLogger } = require('./middlewares/req.middleware');
+const { disconnectProducer } = require('./config/kafka');
 
 const app = express();
 

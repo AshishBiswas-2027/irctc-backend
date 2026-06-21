@@ -57,29 +57,29 @@ exports.getStationById = asyncHandler(async (req, res) => {
      });
 });
 
-exports.updateStation = asyncHandler(async (req, res) => {
-     const { stationId } = req.params;
-     if(!stationId){
-          throw new BadRequestError("stationId is missing");
-     }
-     const station = await stationService.updateStation(stationId, req.body);
+// exports.updateStation = asyncHandler(async (req, res) => {
+//      const { stationId } = req.params;
+//      if(!stationId){
+//           throw new BadRequestError("stationId is missing");
+//      }
+//      const station = await stationService.updateStation(stationId, req.body);
 
-     res.status(200).json({
-          success: true,
-          message: 'Station updated successfully',
-          data: station
-     });
-});
+//      res.status(200).json({
+//           success: true,
+//           message: 'Station updated successfully',
+//           data: station
+//      });
+// });
 
-exports.deleteStation = asyncHandler(async (req, res) => {
-     const { stationId } = req.params;
-     if(!stationId){
-          throw new BadRequestError("Station Id is missing")
-     }
-     await stationService.deleteStation(stationId);
+// exports.deleteStation = asyncHandler(async (req, res) => {
+//      const { stationId } = req.params;
+//      if(!stationId){
+//           throw new BadRequestError("Station Id is missing")
+//      }
+//      await stationService.deleteStation(stationId);
 
-     res.status(200).json({
-          success: true,
-          message: 'Station deleted successfully'
-     });
-});
+//      res.status(200).json({
+//           success: true,
+//           message: 'Station deleted successfully'
+//      });
+// });

@@ -20,10 +20,21 @@ exports.createSchedule = asyncHandler(async (req, res) => {
 })
 
 
+exports.cancelSchedule = asyncHandler(async (req, res) => {
+    const { scheduleId } = req.params;
+    if (!scheduleId) {
+        throw new BadRequestError("ScheduleId is missing");
+        const schedule = await scheduleService.cancelSchedule(scheduleId);
+        return res.status(200).json({
+            success: true,
+            message: "Schedule cancelled",
+            data:schedule
+        })
+    }
+})
+
+
 exports.getAllSchedules = asyncHandler(async(req, res) =>{
-
-})
-
-exports.getScheduleById = asyncHandler(async(req, res) =>{
-     
-})
+     const schedules = await scheduleService.getAllSchedules(req.query);
+     res.status(200).json({ success: true, data: schedules });
+});

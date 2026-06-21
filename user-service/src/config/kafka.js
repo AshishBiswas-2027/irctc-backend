@@ -43,8 +43,6 @@ const disconnectProducer = async () => {
      }
 };
 
-// Graceful shutdown
-process.on('SIGTERM', disconnectProducer);
-process.on('SIGINT', disconnectProducer);
+
 
 module.exports = { kafka, producer, connectProducer, disconnectProducer };

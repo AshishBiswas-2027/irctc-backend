@@ -3,10 +3,10 @@ const asyncHandler = require('../utils/asyncHandler');
 const {config} = require('../config');
 const authService = require('../services/auth.service');
 const getDeviceFingerprint = require("../utils/deviceFingerPrint");
-const logger = require("../config/logger");
-const { http } = require("winston");
-const prisma = require('../config/prisma');
-const { generateRefreshToken } = require("../utils/auth");
+// const logger = require("../config/logger");
+// const { http } = require("winston");
+// const prisma = require('../config/prisma');
+// const { generateRefreshToken } = require("../utils/auth");
 
 //catches info from frontend 
 //if not present then error 
